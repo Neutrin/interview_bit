@@ -1,0 +1,43 @@
+/* approach used to find the nth node from the ending is to maintain two pointers intially both pointing to the head node.Now start traversing 
+one of the pointer till "n" moves and after that start traversing the second pointer.After the first pointer will reach the end of the node
+the second pointer will be at the nth node from the ending
+time complexity O(n)
+space complexity O(1)
+*/
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+	public ListNode removeNthFromEnd(ListNode a, int b) {
+	     int n=b;
+	     ListNode newptr=a;
+        ListNode deleteptr=a;
+        ListNode prv_ptr=a;
+        int count=0;
+        while(newptr!=null){
+            newptr=newptr.next;
+            ++count;
+            if(count>=n+1){
+                
+                deleteptr=deleteptr.next;
+                if(count>n+1){
+                    prv_ptr=prv_ptr.next;
+                }
+            }
+        }
+        if(deleteptr!=a)
+        prv_ptr.next=deleteptr.next;
+        else
+            a=deleteptr.next;
+            return a;
+	}
+}
