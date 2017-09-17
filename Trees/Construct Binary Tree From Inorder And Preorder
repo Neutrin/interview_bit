@@ -1,0 +1,44 @@
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+	int search_inorder(ArrayList<Integer> inorder,int element){
+	    int size=inorder.size();
+	    for(int i=0;i<size;++i){
+	        if(inorder.get(i)==element){
+	            return i;
+	        }
+	    }
+	    return -1;
+	}
+ int preorder_index=-1;
+	TreeNode make_tree(ArrayList<Integer> preorder,ArrayList<Integer> inorder,int start,int end){
+	    
+	    if(start>end)
+	        return null;
+	    int value=0;
+	    if(preorder_index<preorder.size()-1)
+	     value=preorder.get(++preorder_index);
+	     
+	    TreeNode new_node=new TreeNode(value);
+	    if(start==end){
+	        return new_node;
+	    }
+	    int index=search_inorder(inorder,value);
+	    new_node.left=make_tree(preorder,inorder,start,index-1);
+	    new_node.right=make_tree(preorder,inorder,index+1,end);
+	    return new_node;
+	}
+	
+	public TreeNode buildTree(ArrayList<Integer> preorder, ArrayList<Integer> inorder) {
+	    TreeNode start=null;
+	    start=make_tree(preorder,inorder,0,preorder.size()-1);
+	    return start;
+	}
+}
